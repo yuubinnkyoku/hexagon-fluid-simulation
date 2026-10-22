@@ -1,0 +1,22 @@
+name: Native CPU checks
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure
+        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+      - name: Build
+        run: cmake --build build --parallel 2
+      - name: Numerical tests
+        run: ctest --test-dir build --output-on-failure
+      - name: Benchmark smoke test
+        run: ./build/hfs_bench 16 16 1000 1e-4
