@@ -40,6 +40,26 @@ On Windows with a multi-config generator, run `build/Release/hfs_bench.exe` inst
 - `docs/architecture.md`: proposed Android / Hexagon backends and fair comparison methodology.
 - `docs/android-build.md`: preparing an Android NDK build.
 - `.github/workflows/ci.yml`: automatic build and test checks.
+- `.github/workflows/android-arm64.yml`: standalone Android arm64 CPU binary.
+- `scripts/bench_android.py`: repeated adb-based measurement and JSON results.
+- `docs/hvx-plan.md`: proposed HVX kernel and accuracy contract.
+
+## Android CPU measurement
+
+The Android **arm64 CPU-only executable** is produced by
+[Android arm64 CPU executable](.github/workflows/android-arm64.yml)
+via GitHub Actions, so local NDK installation is optional.
+Download the `hfs-bench-android-arm64` artifact from a successful
+Actions run, unzip it, connect the phone over adb, then run:
+
+```sh
+python3 scripts/bench_android.py --binary ./hfs_bench --sizes 16,32,64 --runs 5
+```
+
+The script records device metadata, repeated phone-side solver timings,
+convergence status and pressure error to `benchmark-results/`. Android
+CPU runs are **not** NPU/HVX measurements. Full instructions:
+[docs/android-build.md](docs/android-build.md).
 
 ## Research roadmap
 
