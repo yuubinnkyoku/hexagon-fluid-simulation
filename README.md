@@ -44,6 +44,22 @@ On Windows with a multi-config generator, run `build/Release/hfs_bench.exe` inst
 - `scripts/bench_android.py`: repeated adb-based measurement and JSON results.
 - `docs/hvx-plan.md`: proposed HVX kernel and accuracy contract.
 
+## Standalone Android app (Kotlin + C++)
+
+You can benchmark the pressure solver **entirely on your phone** without
+ADB, a computer, root access or an internet connection after installation.
+The [Android standalone APK](.github/workflows/android-apk.yml) workflow
+builds a debug-signed APK. Download the `hexagon-fluid-lab-debug-apk`
+artifact from a successful run, unzip it and install `app-debug.apk`.
+
+Inside **Hexagon Fluid Lab**, select the grid size, iteration limit and
+number of repeats; tap the start button to run the native CPU solver and
+share the complete JSON report from the app. See
+[Android app instructions](docs/android-app.md).
+
+**Current backend: CPU FP32 only.** HVX, HMX and drawing moving water
+are future work; the app makes no NPU speedup claims.
+
 ## Android CPU measurement
 
 The Android **arm64 CPU-only executable** is produced by
